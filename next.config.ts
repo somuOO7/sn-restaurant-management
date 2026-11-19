@@ -6,6 +6,14 @@ const nextConfig: NextConfig = {
     agentFeedback: true,
   },
   cacheComponents: true,
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "i.ibb.co",
+      },
+    ],
+  },
   partialPrefetching: true,
   turbopack: {
     rules: {
