@@ -5,4 +5,8 @@ export interface MenuItem {
   category: "veg" | "non-veg" | string;
   price: number;
   image?: string;
+  details?: {
+    ingredients: string[];
+    spiceLevel: number;
+  };
 }

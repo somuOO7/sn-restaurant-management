@@ -3,21 +3,25 @@
 import { amountFormatterWithDecimal } from "@/lib/amountFormatter";
 import { Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function MenuTile({
+  id,
   title,
   subtitle,
   category,
   price,
   image = null,
 }: {
+  id?: string;
   title: string;
   subtitle: string;
   category: string;
   price: number;
   image?: string | null;
 }) {
+  const router = useRouter();
   const [itemCount, setItemCount] = useState(0);
 
   const getCategoryColor = (category: string) => {
@@ -56,7 +60,11 @@ export default function MenuTile({
       role="button"
       tabIndex={0}
       className="bg-white flex p-2 rounded-xl gap-2 text-left cursor-pointer border-2 border-orange-100"
-      onClick={() => console.log("Show details button clicked")}
+      onClick={() => {
+        if (id) {
+          router.push(`/guest/${id}/detail`);
+        }
+      }}
     >
       <div className="relative size-28 bg-orange-100 text-orange-800 rounded-xl flex flex-col justify-center items-center gap-4 shrink-0 overflow-hidden">
         {!image ? (

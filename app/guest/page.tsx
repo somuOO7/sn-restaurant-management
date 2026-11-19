@@ -7,6 +7,9 @@ import {
   TabSelector,
   TitleSection,
 } from "@/app/_components";
+import { ShoppingCart } from "lucide-react";
+import { amountFormatterWithDecimal } from "@/lib/amountFormatter";
+import Link from "next/link";
 
 export default function Page() {
   const tabItems = [
@@ -24,14 +27,14 @@ export default function Page() {
 
   const menuItems: MenuItem[] = [
     {
-      id: "1",
+      id: "prod-001",
       title: "Tandoori paneer",
       subtitle: "Smoky, charred & tender",
       category: "veg",
       price: 16,
     },
     {
-      id: "2",
+      id: "prod-002",
       title: "Tandoori chicken",
       subtitle: "Smoky, charred & tender",
       category: "non-veg",
@@ -57,6 +60,7 @@ export default function Page() {
       {menuItems.map((item) => (
         <MenuTile
           key={item.id}
+          id={item.id}
           title={item.title}
           subtitle={item.subtitle}
           category={item.category}
@@ -64,6 +68,18 @@ export default function Page() {
           image={item.image}
         />
       ))}
+
+      <Link
+        href="/guest/cart"
+        className="fixed bottom-4 left-4 right-4 flex bg-black text-white rounded-xl h-14 items-center justify-between p-4 cursor-pointer"
+      >
+        <div className="flex items-center gap-2 bg-gray-600 rounded-full px-4 py-1">
+          <ShoppingCart />
+          <p>3</p>
+        </div>
+        <h1 className="font-semibold">View cart</h1>
+        <p className="font-semibold">{amountFormatterWithDecimal(20)}</p>
+      </Link>
     </div>
   );
 }
