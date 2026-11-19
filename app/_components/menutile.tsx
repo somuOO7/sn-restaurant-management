@@ -3,6 +3,7 @@
 import { amountFormatterWithDecimal } from "@/lib/amountFormatter";
 import { Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function MenuTile({
   title,
@@ -17,6 +18,8 @@ export default function MenuTile({
   price: number;
   image?: string | null;
 }) {
+  const [itemCount, setItemCount] = useState(0);
+
   const getCategoryColor = (category: string) => {
     switch (category) {
       case "veg":
@@ -36,6 +39,15 @@ export default function MenuTile({
         return "NON VEG";
       default:
         return "VEG";
+    }
+  };
+
+  const handleItemCount = (e: React.MouseEvent, type: "add" | "subtract") => {
+    e.stopPropagation();
+    if (type === "add") {
+      setItemCount((prev) => prev + 1);
+    } else {
+      setItemCount((prev) => prev - 1);
     }
   };
 
@@ -77,15 +89,30 @@ export default function MenuTile({
 
         <div className="flex items-center justify-between">
           <p className="font-semibold">{amountFormatterWithDecimal(price)}</p>
-          <button
-            className="bg-orange-100 text-orange-800 rounded-xl px-2 py-1 font-semibold text-sm"
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log("Add to cart clicked");
-            }}
-          >
-            + Add
-          </button>
+          {itemCount === 0 ? (
+            <button
+              className="bg-orange-100 text-orange-800 rounded-xl px-2 py-1 font-semibold text-sm"
+              onClick={(e) => handleItemCount(e, "add")}
+            >
+              + Add
+            </button>
+          ) : (
+            <div className="flex items-center gap-2">
+              <button
+                className="bg-orange-100 rounded-full text-orange-800 font-semibold text-sm size-7 flex items-center justify-center"
+                onClick={(e) => handleItemCount(e, "subtract")}
+              >
+                -
+              </button>
+              <p>{itemCount}</p>
+              <button
+                className="bg-orange-100 rounded-full text-orange-800 font-semibold text-sm size-7 flex items-center justify-center"
+                onClick={(e) => handleItemCount(e, "add")}
+              >
+                +
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>
